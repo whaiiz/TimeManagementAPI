@@ -1,8 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "9jkUkyhxmxOUKJIjT3bRr78HSB9JRQSw7ab9rCy6xZ79i4mxAZqQaQH1iksMKxp6J1RLl4uHE9IEKs48Vob4oQ==",
+  "dgSpecHash": "Ts5vB5tNTb3XO/Jc8Q6aiPAubcfJZMop9fQENJbu+6RE3CE8zSeSwiomUZqlFGzyq6uKVn17HGJF4JzygviZ1w==",
   "success": true,
   "projectFilePath": "C:\\Users\\jaime\\source\\repos\\TimeManagementAPI\\TimeManagementAPI\\TimeManagementAPI.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\jaime\\.nuget\\packages\\dnsclient\\1.4.0\\dnsclient.1.4.0.nupkg.sha512",
+    "C:\\Users\\jaime\\.nuget\\packages\\microsoft.netcore.platforms\\2.1.2\\microsoft.netcore.platforms.2.1.2.nupkg.sha512",
+    "C:\\Users\\jaime\\.nuget\\packages\\mongodb.bson\\2.13.1\\mongodb.bson.2.13.1.nupkg.sha512",
+    "C:\\Users\\jaime\\.nuget\\packages\\mongodb.driver\\2.13.1\\mongodb.driver.2.13.1.nupkg.sha512",
+    "C:\\Users\\jaime\\.nuget\\packages\\mongodb.driver.core\\2.13.1\\mongodb.driver.core.2.13.1.nupkg.sha512",
+    "C:\\Users\\jaime\\.nuget\\packages\\mongodb.libmongocrypt\\1.2.2\\mongodb.libmongocrypt.1.2.2.nupkg.sha512",
+    "C:\\Users\\jaime\\.nuget\\packages\\sharpcompress\\0.23.0\\sharpcompress.0.23.0.nupkg.sha512",
+    "C:\\Users\\jaime\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\jaime\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "C:\\Users\\jaime\\.nuget\\packages\\system.text.encoding.codepages\\4.5.1\\system.text.encoding.codepages.4.5.1.nupkg.sha512"
+  ],
   "logs": []
 }
