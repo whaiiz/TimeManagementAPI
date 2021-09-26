@@ -1,6 +1,6 @@
 ﻿namespace TimeManagementAPI.Models
 {
-    public enum TaskStatus
+    public enum WorkItemStatus
     {
         ToDo,
         Active,
