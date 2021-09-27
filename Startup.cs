@@ -1,16 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TimeManagementAPI.Models;
 using TimeManagementAPI.Repositories;
 using TimeManagementAPI.Repositories.Interfaces;
@@ -31,8 +24,8 @@ namespace TimeManagementAPI
         {
             services.AddScoped(p =>
             {
-                var client = new MongoClient(Configuration.GetConnectionString("TimeManagementDb"));
-                var database = client.GetDatabase(Configuration.GetValue<string>("DatabaseName"));
+                var client = new MongoClient(Configuration.GetValue<string>("TimeManagementDb:ConnectionString"));
+                var database = client.GetDatabase(Configuration.GetValue<string>("TimeManagementDb:DatabaseName"));
                 return database.GetCollection<WorkItem>("WorkItems");
             });
 

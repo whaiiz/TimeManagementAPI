@@ -6,7 +6,7 @@ namespace TimeManagementAPI.Models
     public class BaseModel
     {
         [BsonId]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public DateTime CreatedAt { get; set; }
 

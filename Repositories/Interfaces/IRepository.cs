@@ -9,12 +9,12 @@ namespace TimeManagementAPI.Repositories.Interfaces
     {
         Task Create(T entity);
 
-        Task<T> GetById(Guid id);
+        Task<T> GetById(int id);
 
         Task<ICollection<T>> GetAll();
         
         Task Update(T entity);
 
-        Task Delete(Guid id);
+        Task Delete(int id);
     }
 }
