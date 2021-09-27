@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TimeManagementAPI.Exceptions;
 using TimeManagementAPI.Models;
 using TimeManagementAPI.Repositories.Interfaces;
 
@@ -33,7 +33,11 @@ namespace TimeManagementAPI.Repositories.MongoDb
         public async Task<T> GetById(int id)
         {
             var filter = Builders<T>.Filter.Eq("Id", id);
-            return await _collection.Find(filter).FirstAsync();
+            var result = await _collection.Find(filter).FirstAsync();
+
+            if (result == null) throw new WorkItemNotFoundException();
+
+            return result;
         }
 
         public async Task Update(T entity)
