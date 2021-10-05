@@ -26,30 +26,30 @@ namespace TimeManagementAPI.Repositories.MongoDb
 
         public async Task<ICollection<T>> GetAll()
         {
-            return await _collection.Find(new BsonDocument())
-                .ToListAsync();
+            return await _collection.Find(new BsonDocument()).ToListAsync();
         }
 
         public async Task<T> GetById(int id)
         {
             var filter = Builders<T>.Filter.Eq("Id", id);
-            var result = await _collection.Find(filter).FirstAsync();
+            var result = await _collection.Find(filter).FirstOrDefaultAsync();
 
-            if (result == null) throw new WorkItemNotFoundException();
+            if (result == null) throw new EntityNotFoundException();
 
             return result;
         }
 
         public async Task Update(T entity)
         {
-            await _collection.ReplaceOneAsync(
-                new BsonDocument("Id", entity.Id),
-                entity);
+            await GetById(entity.Id);
+            await _collection.ReplaceOneAsync(new BsonDocument("Id", entity.Id), entity);
         }
 
         public async Task Delete(int id)
         {
             var filter = Builders<T>.Filter.Eq("Id", id);
+
+            await GetById(id);
             await _collection.DeleteOneAsync(filter);
         }
     }
