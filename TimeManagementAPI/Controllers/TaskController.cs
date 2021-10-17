@@ -9,19 +9,19 @@ namespace TimeManagementAPI.Controllers
     [ApiController]
     [CustomExceptionFilter]
     [Route("api/[controller]")]
-    public class WorkItemController : ControllerBase
+    public class TaskController : ControllerBase
     {
-        private readonly IWorkItemRepository _repository;
+        private readonly ITaskRepository _repository;
 
-        public WorkItemController(IWorkItemRepository repository)
+        public TaskController(ITaskRepository repository)
         {
             _repository = repository;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] WorkItem workItem)
+        public async Task<IActionResult> Create([FromBody] TaskModel task)
         {
-            await _repository.Create(workItem);
+            await _repository.Create(task);
             return Ok();
         }
 
@@ -29,17 +29,17 @@ namespace TimeManagementAPI.Controllers
         public async Task<IActionResult> GetAll() => Ok(await _repository.GetAll());
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id) => Ok(await _repository.GetById(id));
+        public async Task<IActionResult> GetById(string id) => Ok(await _repository.GetById(id));
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] WorkItem workItem)
+        public async Task<IActionResult> Update([FromBody] TaskModel task)
         {
-            await _repository.Update(workItem);
+            await _repository.Update(task);
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             await _repository.Delete(id);
             return Ok();

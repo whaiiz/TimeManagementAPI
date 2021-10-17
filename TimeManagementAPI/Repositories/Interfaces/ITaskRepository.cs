@@ -2,7 +2,7 @@
 
 namespace TimeManagementAPI.Repositories.Interfaces
 {
-    public interface IWorkItemRepository : IRepository<WorkItem>
+    public interface ITaskRepository : IRepository<TaskModel>
     {
     }
 }

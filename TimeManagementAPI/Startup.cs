@@ -26,10 +26,10 @@ namespace TimeManagementAPI
             {
                 var client = new MongoClient(Configuration.GetValue<string>("TimeManagementDb:ConnectionString"));
                 var database = client.GetDatabase(Configuration.GetValue<string>("TimeManagementDb:DatabaseName"));
-                return database.GetCollection<WorkItem>("WorkItems");
+                return database.GetCollection<TaskModel>("Tasks");
             });
 
-            services.AddScoped<IWorkItemRepository, WorkItemRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddControllers();
         }
 

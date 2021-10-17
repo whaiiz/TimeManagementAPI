@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TimeManagementAPI.Models;
 
@@ -9,12 +8,12 @@ namespace TimeManagementAPI.Repositories.Interfaces
     {
         Task Create(T entity);
 
-        Task<T> GetById(int id);
+        Task<T> GetById(string id);
 
         Task<ICollection<T>> GetAll();
         
         Task Update(T entity);
 
-        Task Delete(int id);
+        Task Delete(string id);
     }
 }
