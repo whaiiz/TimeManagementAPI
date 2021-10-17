@@ -2,7 +2,7 @@
 
 namespace TimeManagementAPI.Models
 {
-    public class WorkItem : BaseModel
+    public class TaskModel : BaseModel
     {
         public string Name { get; set; }
         
@@ -10,6 +10,6 @@ namespace TimeManagementAPI.Models
         
         public DateTime DateTime { get; set; }
 
-        public WorkItemStatus WorkItemStatus { get; set; }
+        public TaskStatus TaskStatus { get; set; }
     }
 }

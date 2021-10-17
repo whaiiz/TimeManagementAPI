@@ -29,7 +29,7 @@ namespace TimeManagementAPI.Repositories.MongoDb
             return await _collection.Find(new BsonDocument()).ToListAsync();
         }
 
-        public async Task<T> GetById(int id)
+        public async Task<T> GetById(string id)
         {
             var filter = Builders<T>.Filter.Eq("Id", id);
             var result = await _collection.Find(filter).FirstOrDefaultAsync();
@@ -45,7 +45,7 @@ namespace TimeManagementAPI.Repositories.MongoDb
             await _collection.ReplaceOneAsync(new BsonDocument("Id", entity.Id), entity);
         }
 
-        public async Task Delete(int id)
+        public async Task Delete(string id)
         {
             var filter = Builders<T>.Filter.Eq("Id", id);
 

@@ -5,9 +5,9 @@ using TimeManagementAPI.Repositories.MongoDb;
 
 namespace TimeManagementAPI.Repositories
 {
-    public class WorkItemRepository : Repository<WorkItem>, IWorkItemRepository
+    public class TaskRepository : Repository<TaskModel>, ITaskRepository
     {
-        public WorkItemRepository(IMongoCollection<WorkItem> collection) : base (collection)
+        public TaskRepository(IMongoCollection<TaskModel> collection) : base (collection)
         {
 
         }
