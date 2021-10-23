@@ -10,6 +10,6 @@ namespace TimeManagementAPI.Models
         
         public DateTime DateTime { get; set; }
 
-        public TaskStatus TaskStatus { get; set; }
+        public string Status { get; set; }
     }
 }
