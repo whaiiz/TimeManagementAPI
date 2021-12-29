@@ -41,8 +41,9 @@ namespace TimeManagementAPI.Repositories.MongoDb
 
         public async Task Update(T entity)
         {
-            await GetById(entity.Id);
-            await _collection.ReplaceOneAsync(new BsonDocument("Id", entity.Id), entity);
+            var e = await GetById(entity.Id);
+            entity.CreatedAt = e.CreatedAt;
+            await _collection.ReplaceOneAsync(e => e.Id.Equals(entity.Id), entity);
         }
 
         public async Task Delete(string id)

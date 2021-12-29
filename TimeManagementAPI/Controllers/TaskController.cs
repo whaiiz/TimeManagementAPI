@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TimeManagementAPI.Filters;
 using TimeManagementAPI.Models;
@@ -9,6 +10,7 @@ namespace TimeManagementAPI.Controllers
     [ApiController]
     [CustomExceptionFilter]
     [Route("api/[controller]")]
+    [EnableCors]
     public class TaskController : ControllerBase
     {
         private readonly ITaskRepository _repository;
