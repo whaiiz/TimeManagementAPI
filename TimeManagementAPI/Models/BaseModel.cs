@@ -12,5 +12,7 @@ namespace TimeManagementAPI.Models
         public virtual string Id { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public DateTime UpdatedAt { get; set; }
     }
 }
