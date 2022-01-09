@@ -11,28 +11,28 @@ namespace TimeManagementAPI.Repositories.MongoDb
 {
     public class Repository<T> : IRepository<T> where T : BaseModel
     {
-        private readonly IMongoCollection<T> _collection;
+        protected readonly IMongoCollection<T> Collection;
 
         public Repository(IMongoCollection<T> collection)
         {
-            _collection = collection;
+            Collection = collection;
         }
 
         public async Task Create(T entity)
         {
             entity.CreatedAt = DateTime.Now;
-            await _collection.InsertOneAsync(entity);
+            await Collection.InsertOneAsync(entity);
         }
 
         public async Task<ICollection<T>> GetAll()
         {
-            return await _collection.Find(new BsonDocument()).ToListAsync();
+            return await Collection.Find(new BsonDocument()).ToListAsync();
         }
 
         public async Task<T> GetById(string id)
         {
             var filter = Builders<T>.Filter.Eq("Id", id);
-            var result = await _collection.Find(filter).FirstOrDefaultAsync();
+            var result = await Collection.Find(filter).FirstOrDefaultAsync();
 
             if (result == null) throw new EntityNotFoundException();
 
@@ -41,8 +41,10 @@ namespace TimeManagementAPI.Repositories.MongoDb
 
         public async Task Update(T entity)
         {
-            await GetById(entity.Id);
-            await _collection.ReplaceOneAsync(new BsonDocument("Id", entity.Id), entity);
+            var e = await GetById(entity.Id);
+            entity.CreatedAt = e.CreatedAt;
+            entity.UpdatedAt = DateTime.Now;
+            await Collection.ReplaceOneAsync(e => e.Id.Equals(entity.Id), entity);
         }
 
         public async Task Delete(string id)
@@ -50,7 +52,7 @@ namespace TimeManagementAPI.Repositories.MongoDb
             var filter = Builders<T>.Filter.Eq("Id", id);
 
             await GetById(id);
-            await _collection.DeleteOneAsync(filter);
+            await Collection.DeleteOneAsync(filter);
         }
     }
 }

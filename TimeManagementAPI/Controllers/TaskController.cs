@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 using TimeManagementAPI.Filters;
 using TimeManagementAPI.Models;
@@ -9,6 +11,7 @@ namespace TimeManagementAPI.Controllers
     [ApiController]
     [CustomExceptionFilter]
     [Route("api/[controller]")]
+    [EnableCors]
     public class TaskController : ControllerBase
     {
         private readonly ITaskRepository _repository;
@@ -35,6 +38,20 @@ namespace TimeManagementAPI.Controllers
         public async Task<IActionResult> Update([FromBody] TaskModel task)
         {
             await _repository.Update(task);
+            return Ok();
+        }
+
+        [HttpPut("UpdateDate")]
+        public async Task<IActionResult> UpdateDate(string id, DateTime date)
+        {
+            await _repository.UpdateDate(id, date);
+            return Ok();
+        }
+
+        [HttpPut("UpdateStatus")]
+        public async Task<IActionResult> UpdateStatus(string id, string status)
+        {
+            await _repository.UpdateStatus(id, status);
             return Ok();
         }
 
