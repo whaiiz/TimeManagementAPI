@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -29,11 +30,11 @@ namespace TimeManagementAPI
                 return database.GetCollection<TaskModel>("Tasks");
             });
 
-
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddControllers();
+            services.AddMediatR(typeof(Program).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
