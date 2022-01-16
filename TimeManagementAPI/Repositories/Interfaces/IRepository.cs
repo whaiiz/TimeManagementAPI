@@ -6,7 +6,7 @@ namespace TimeManagementAPI.Repositories.Interfaces
 {
     public interface IRepository<T> where T: BaseModel
     {
-        Task Create(T entity);
+        Task<T> Create(T entity);
 
         Task<T> GetById(string id);
 

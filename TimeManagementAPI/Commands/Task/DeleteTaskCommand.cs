@@ -2,5 +2,5 @@
 
 namespace TimeManagementAPI.Commands.Task
 {
-    public record DeleteTaskCommand(int Id) : IRequest;
+    public record DeleteTaskCommand(string Id) : IRequest;
 }

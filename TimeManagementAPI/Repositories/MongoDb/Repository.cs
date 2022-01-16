@@ -18,10 +18,11 @@ namespace TimeManagementAPI.Repositories.MongoDb
             Collection = collection;
         }
 
-        public async Task Create(T entity)
+        public async Task<T> Create(T entity)
         {
             entity.CreatedAt = DateTime.Now;
             await Collection.InsertOneAsync(entity);
+            return entity;
         }
 
         public async Task<ICollection<T>> GetAll()

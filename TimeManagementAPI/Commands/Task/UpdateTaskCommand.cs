@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using TimeManagementAPI.Models;
 
 namespace TimeManagementAPI.Commands.Task
 {
-    public record UpdateTaskCommand(int Id) : IRequest;
+    public record UpdateTaskCommand(TaskModel Task) : IRequest;
 }
