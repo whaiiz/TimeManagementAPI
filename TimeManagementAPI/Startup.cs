@@ -29,6 +29,9 @@ namespace TimeManagementAPI
                 return database.GetCollection<TaskModel>("Tasks");
             });
 
+
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen();
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddControllers();
         }
@@ -39,6 +42,9 @@ namespace TimeManagementAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
+
             }
 
             app.UseHttpsRedirection();
