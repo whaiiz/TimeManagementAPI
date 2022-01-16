@@ -1,6 +1,7 @@
-﻿namespace TimeManagementAPI.Commands.Task
+﻿using MediatR;
+using TimeManagementAPI.Models;
+
+namespace TimeManagementAPI.Commands.Task
 {
-    public class CreateTaskCommand
-    {
-    }
+    public record CreateTaskCommannd(int Id) : IRequest<TaskModel>;
 }

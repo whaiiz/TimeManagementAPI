@@ -1,6 +1,6 @@
-﻿namespace TimeManagementAPI.Commands.Task
+﻿using MediatR;
+
+namespace TimeManagementAPI.Commands.Task
 {
-    public class DeleteTaskCommand
-    {
-    }
+    public record DeleteTaskCommand(int Id) : IRequest;
 }
