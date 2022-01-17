@@ -20,7 +20,6 @@ namespace TimeManagementAPI.Repositories.MongoDb
 
         public async Task<T> Create(T entity)
         {
-            entity.CreatedAt = DateTime.Now;
             await Collection.InsertOneAsync(entity);
             return entity;
         }
@@ -35,24 +34,17 @@ namespace TimeManagementAPI.Repositories.MongoDb
             var filter = Builders<T>.Filter.Eq("Id", id);
             var result = await Collection.Find(filter).FirstOrDefaultAsync();
 
-            if (result == null) throw new EntityNotFoundException();
-
             return result;
         }
 
         public async Task Update(T entity)
         {
-            var e = await GetById(entity.Id);
-            entity.CreatedAt = e.CreatedAt;
-            entity.UpdatedAt = DateTime.Now;
             await Collection.ReplaceOneAsync(e => e.Id.Equals(entity.Id), entity);
         }
 
         public async Task Delete(string id)
         {
             var filter = Builders<T>.Filter.Eq("Id", id);
-
-            await GetById(id);
             await Collection.DeleteOneAsync(filter);
         }
     }

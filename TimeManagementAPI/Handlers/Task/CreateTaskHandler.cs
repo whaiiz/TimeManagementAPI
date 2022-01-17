@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Task;
@@ -7,7 +8,7 @@ using TimeManagementAPI.Repositories.Interfaces;
 
 namespace TimeManagementAPI.Handlers.Task
 {
-    public class CreateTaskHandler : IRequestHandler<CreateTaskCommannd, TaskModel>
+    public class CreateTaskHandler : IRequestHandler<CreateTaskCommand, TaskModel>
     {
         private readonly ITaskRepository _taskRepository;
 
@@ -16,8 +17,9 @@ namespace TimeManagementAPI.Handlers.Task
             _taskRepository = taskRepository;
         }
 
-        public async Task<TaskModel> Handle(CreateTaskCommannd request, CancellationToken cancellationToken)
+        public async Task<TaskModel> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
         {
+            request.Task.CreatedAt = DateTime.Now;
             return await _taskRepository.Create(request.Task);
         }
     }

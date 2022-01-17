@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Task;
 using TimeManagementAPI.Filters;
@@ -22,17 +23,16 @@ namespace TimeManagementAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TaskModel task)
-        {
-            await _mediator.Send(new CreateTaskCommannd(task));
-            return Ok();
-        }
+        public async Task<IActionResult> Create([FromBody] TaskModel task) =>
+            Ok(await _mediator.Send(new CreateTaskCommand(task)));
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _mediator.Send(new GetAllTasksQuery()));
+        public async Task<IActionResult> GetAll() => 
+            Ok(await _mediator.Send(new GetAllTasksQuery()));
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id) => Ok(await _mediator.Send(new GetTaskByIdQuery(id)));
+        public async Task<IActionResult> GetById(string id) => 
+            Ok(await _mediator.Send(new GetTaskByIdQuery(id)));
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] TaskModel task)

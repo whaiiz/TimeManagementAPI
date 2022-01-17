@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Task;
@@ -17,7 +18,12 @@ namespace TimeManagementAPI.Handlers.Task
         
         public async Task<Unit> Handle(UpdateTaskDateCommand request, CancellationToken cancellationToken)
         {
-            await _taskRepository.UpdateDate(request.Id, request.DateTime);
+            var task = await _taskRepository.GetById(request.Id);
+
+            task.UpdatedAt = DateTime.Now;
+            task.DateTime = request.DateTime;
+
+            await _taskRepository.Update(task);
             return Unit.Value;
         }
     }
