@@ -3,5 +3,5 @@ using TimeManagementAPI.Models;
 
 namespace TimeManagementAPI.Commands.Task
 {
-    public record CreateTaskCommannd(TaskModel Task) : IRequest<TaskModel>;
+    public record CreateTaskCommand(TaskModel Task) : IRequest<TaskModel>;
 }
