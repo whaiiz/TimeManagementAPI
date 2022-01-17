@@ -3,15 +3,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using TimeManagementAPI.Models;
 using TimeManagementAPI.Queries.Task;
-using TimeManagementAPI.Repositories;
+using TimeManagementAPI.Repositories.Interfaces;
 
 namespace TimeManagementAPI.Handlers.Task
 {
     public class GetTaskByIdHandler : IRequestHandler<GetTaskByIdQuery, TaskModel>
     {
-        private readonly TaskRepository _taskRepository;
+        private readonly ITaskRepository _taskRepository;
 
-        public GetTaskByIdHandler(TaskRepository taskRepository)
+        public GetTaskByIdHandler(ITaskRepository taskRepository)
         {
             _taskRepository = taskRepository;
         }
