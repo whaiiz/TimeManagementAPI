@@ -4,5 +4,5 @@ using TimeManagementAPI.Models;
 
 namespace TimeManagementAPI.Queries.Task
 {
-    public record GetAllTasksQuery(int Id) : IRequest<List<TaskModel>>;
+    public record GetAllTasksQuery() : IRequest<List<TaskModel>>;
 }
