@@ -2,15 +2,15 @@
 using System.Threading;
 using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Task;
-using TimeManagementAPI.Repositories;
+using TimeManagementAPI.Repositories.Interfaces;
 
 namespace TimeManagementAPI.Handlers.Task
 {
     public class UpdateTaskHandler : IRequestHandler<UpdateTaskCommand>
     {
-        private readonly TaskRepository _taskRepository;
+        private readonly ITaskRepository _taskRepository;
 
-        public UpdateTaskHandler(TaskRepository taskRepository)
+        public UpdateTaskHandler(ITaskRepository taskRepository)
         {
             _taskRepository = taskRepository;
         }
