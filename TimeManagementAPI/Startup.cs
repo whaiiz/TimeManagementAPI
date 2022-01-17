@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using MongoDB.Driver;
 using TimeManagementAPI.Models;
 using TimeManagementAPI.Repositories;
 using TimeManagementAPI.Repositories.Interfaces;
+using TimeManagementAPI.Repositories.MongoDb;
 
 namespace TimeManagementAPI
 {
@@ -29,11 +31,11 @@ namespace TimeManagementAPI
                 return database.GetCollection<TaskModel>("Tasks");
             });
 
-
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddControllers();
+            services.AddMediatR(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
