@@ -24,16 +24,16 @@ namespace TimeManagementAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped(p =>
-            {
-                var client = new MongoClient(Configuration.GetValue<string>("TimeManagementDb:ConnectionString"));
-                var database = client.GetDatabase(Configuration.GetValue<string>("TimeManagementDb:DatabaseName"));
-                return database.GetCollection<TaskModel>("Tasks");
-            });
+            var mongoClient = new MongoClient(Configuration.GetValue<string>("TimeManagementDb:ConnectionString"));
+            var database = mongoClient.GetDatabase(Configuration.GetValue<string>("TimeManagementDb:DatabaseName"));
+
+            services.AddScoped(p => database.GetCollection<TaskModel>("Tasks"));
+            services.AddScoped(p => database.GetCollection<UserModel>("Users"));
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITaskRepository, TaskRepository>();
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddControllers();
             services.AddMediatR(typeof(Startup).Assembly);
         }
