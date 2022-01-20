@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Task;
 using TimeManagementAPI.Filters;

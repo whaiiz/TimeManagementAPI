@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,7 +33,8 @@ namespace TimeManagementAPI.Handlers.Authentication
             {
                 Username = request.User.Username,
                 PasswordSalt = passwordSalt,
-                PasswordHash = passwordHash
+                PasswordHash = passwordHash,
+                CreatedAt = DateTime.Now
             });
 
             return Unit.Value;

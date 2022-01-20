@@ -46,7 +46,6 @@ namespace TimeManagementAPI
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
-
             }
 
             app.UseHttpsRedirection();
