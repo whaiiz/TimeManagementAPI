@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TimeManagementAPI.Dtos;
-using TimeManagementAPI.Models;
-using Microsoft.Extensions.Configuration;
 using MediatR;
 using TimeManagementAPI.Commands.Authentication;
 
