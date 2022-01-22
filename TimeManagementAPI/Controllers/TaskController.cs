@@ -11,7 +11,7 @@ using TimeManagementAPI.Queries.Task;
 namespace TimeManagementAPI.Controllers
 {
     [ApiController]
-    [CustomExceptionFilter]
+    [CustomExceptionFilterAttribute]
     [Authorize]
     [Route("api/[controller]")]
     public class TaskController : ControllerBase
