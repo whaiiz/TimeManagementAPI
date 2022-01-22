@@ -1,7 +1,7 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Task;
 using TimeManagementAPI.Filters;
@@ -12,6 +12,7 @@ namespace TimeManagementAPI.Controllers
 {
     [ApiController]
     [CustomExceptionFilter]
+    [Authorize]
     [Route("api/[controller]")]
     public class TaskController : ControllerBase
     {

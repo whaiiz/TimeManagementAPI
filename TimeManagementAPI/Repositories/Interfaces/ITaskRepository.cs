@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using TimeManagementAPI.Models;
+﻿using TimeManagementAPI.Models;
 
 namespace TimeManagementAPI.Repositories.Interfaces
 {
