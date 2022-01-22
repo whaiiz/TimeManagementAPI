@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using TimeManagementAPI.Dtos;
 using MediatR;
 using TimeManagementAPI.Commands.Authentication;
+using TimeManagementAPI.Filters;
 
 namespace TimeManagementAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [CustomExceptionFilterAttribute]
     public class AuthenticationController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -27,7 +29,11 @@ namespace TimeManagementAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserDto request)
         {
-            return Ok(await _mediator.Send(new LoginCommand(request.Username, request.Password)));
+            var token = await _mediator.Send(new LoginCommand(request.Username, request.Password));
+
+            if (token == "") return BadRequest("The username or password you’ve entered is incorrect.");
+
+            return Ok(token);
         }
     }
 }

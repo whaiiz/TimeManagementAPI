@@ -38,7 +38,7 @@ namespace TimeManagementAPI.Handlers.Authentication
             return jwt;
         }
 
-        private static bool VerifyPassword(UserModel user, string passwordInput)
+        private static bool IsPasswordCorrect(UserModel user, string passwordInput)
         {
             using var hmac = new HMACSHA512(user.PasswordSalt);
             var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(passwordInput));
@@ -49,14 +49,14 @@ namespace TimeManagementAPI.Handlers.Authentication
         {
             var user = await _userRepository.GetByUsername(request.Username);
 
-            if (user == null) return "Username not found";
+            if (user == null) return "";
 
-            if (VerifyPassword(user, request.Password))
+            if (IsPasswordCorrect(user, request.Password))
             {
                 return GenerateToken(user);
             }
 
-            return "Wrong password";
+            return "";
         }
     }
 }

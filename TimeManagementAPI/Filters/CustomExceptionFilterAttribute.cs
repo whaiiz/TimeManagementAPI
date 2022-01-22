@@ -5,7 +5,7 @@ using TimeManagementAPI.Exceptions;
 
 namespace TimeManagementAPI.Filters
 {
-    public class CustomExceptionFilter : ExceptionFilterAttribute 
+    public class CustomExceptionFilterAttribute : ExceptionFilterAttribute 
     {
         public override Task OnExceptionAsync(ExceptionContext context)
         {

@@ -21,7 +21,7 @@ namespace TimeManagementAPI.Handlers.Task
         {
             var result = await _taskRepository.GetById(request.Id);
 
-            if (result == null) throw new EntityNotFoundException();
+            if (result == null) throw new TaskNotFoundException();
 
             return result;
         }

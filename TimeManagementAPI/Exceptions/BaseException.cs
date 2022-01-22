@@ -6,7 +6,7 @@ namespace TimeManagementAPI.Exceptions
     {
         public int StatusCode { get; set; } = 500;
 
-        public BaseException(string message, int statusCode) : base(message)
+        protected BaseException(string message, int statusCode) : base(message)
         {
             StatusCode = statusCode;
         }

@@ -21,7 +21,7 @@ namespace TimeManagementAPI.Handlers.Task
         {
             var task = await _taskRepository.GetById(request.Task.Id);
 
-            if (task == null) throw new EntityNotFoundException();
+            if (task == null) throw new TaskNotFoundException();
 
             request.Task.UpdatedAt = DateTime.Now;
 
