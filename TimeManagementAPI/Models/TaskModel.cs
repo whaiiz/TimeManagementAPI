@@ -16,5 +16,8 @@ namespace TimeManagementAPI.Models
 
         [BsonElement("status")]
         public string Status { get; set; }
+
+        [BsonElement("username")]
+        public string Username { get; set; }
     }
 }
