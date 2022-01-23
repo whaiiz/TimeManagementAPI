@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Task;
+using TimeManagementAPI.Exceptions;
 using TimeManagementAPI.Repositories.Interfaces;
 
 namespace TimeManagementAPI.Handlers.Task
@@ -20,8 +21,12 @@ namespace TimeManagementAPI.Handlers.Task
         {
             var task = await _taskRepository.GetById(request.Id);
 
+            if (task == null) throw new TaskNotFoundException();
+            if (task.Username != request.Username) throw new UnauthorizedTaskAccessException();
+
             task.UpdatedAt = DateTime.Now;
             task.Status = request.Status;
+            task.Username = request.Username;
 
             await _taskRepository.Update(task);
             return Unit.Value;

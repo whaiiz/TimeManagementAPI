@@ -21,6 +21,7 @@ namespace TimeManagementAPI.Handlers.Task
             var task = await _taskRepository.GetById(request.Id);
 
             if (task == null) throw new TaskNotFoundException();
+            if (task.Username != request.Username) throw new UnauthorizedTaskAccessException();
 
             await _taskRepository.Delete(request.Id);
             
