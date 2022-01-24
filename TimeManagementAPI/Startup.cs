@@ -1,3 +1,4 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
+using TimeManagementAPI.Dtos;
 using TimeManagementAPI.Models;
 using TimeManagementAPI.Repositories;
 using TimeManagementAPI.Repositories.Interfaces;
@@ -55,6 +57,14 @@ namespace TimeManagementAPI
                     ValidateAudience = false
                 };
             });
+
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<UserModel, UserDto>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
