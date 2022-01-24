@@ -6,5 +6,7 @@ namespace TimeManagementAPI.Repositories.Interfaces
     public interface IUserRepository : IRepository<UserModel>
     {
         Task<UserModel> GetByUsername(string username);
+
+        Task<UserModel> GetByEmail(string email);
     }
 }
