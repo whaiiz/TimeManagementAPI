@@ -50,11 +50,7 @@ namespace TimeManagementAPI.Handlers.Authentication
             var user = await _userRepository.GetByUsername(request.Username);
 
             if (user == null) return "";
-
-            if (IsPasswordCorrect(user, request.Password))
-            {
-                return GenerateToken(user);
-            }
+            if (IsPasswordCorrect(user, request.Password)) return GenerateToken(user);
 
             return "";
         }
