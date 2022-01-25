@@ -6,6 +6,8 @@
 
         public string Email { get; set; }
 
+        public bool IsEmailConfirmed { get; set; }
+
         public byte[] PasswordHash { get; set; }
 
         // Technique used to help protect passwords stored in a database from being
