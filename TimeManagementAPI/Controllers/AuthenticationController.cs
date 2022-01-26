@@ -4,6 +4,7 @@ using TimeManagementAPI.Dtos;
 using MediatR;
 using TimeManagementAPI.Commands.Authentication;
 using TimeManagementAPI.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TimeManagementAPI.Controllers
 {
@@ -29,11 +30,16 @@ namespace TimeManagementAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto request)
         {
-            var token = await _mediator.Send(new LoginCommand(request.Username, request.Password));
+            var response = await _mediator.Send(new LoginCommand(request.Username, request.Password));
+            return StatusCode(response.StatusCode, response.Message);
+        }
 
-            if (token == "") return BadRequest("The username or password you’ve entered is incorrect.");
-
-            return Ok(token);
+        [Authorize]
+        [HttpPost("confirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string token)
+        {
+            var response = await _mediator.Send(new ConfirmEmailCommand(User.Identity.Name, token));
+            return StatusCode(response.StatusCode, response.Message);
         }
     }
 }
