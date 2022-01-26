@@ -12,10 +12,11 @@ using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Authentication;
 using TimeManagementAPI.Models;
 using TimeManagementAPI.Repositories.Interfaces;
+using TimeManagementAPI.Utils;
 
 namespace TimeManagementAPI.Handlers.Authentication
 {
-    public class LoginHandler : IRequestHandler<LoginCommand, string>
+    public class LoginHandler : IRequestHandler<LoginCommand, ResponseModel>
     {
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
@@ -45,14 +46,15 @@ namespace TimeManagementAPI.Handlers.Authentication
             return computedHash.SequenceEqual(user.PasswordHash);
         }
 
-        public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByUsername(request.Username);
 
-            if (user == null) return "";
-            if (IsPasswordCorrect(user, request.Password)) return GenerateToken(user);
+            if (user == null) return new ResponseModel(400, "User doesn't exist");
+            if (!user.IsEmailConfirmed) return new ResponseModel(400, "Confirm your email first");
+            if (!IsPasswordCorrect(user, request.Password)) return new ResponseModel(400, "Wrong Password");
 
-            return "";
+            return new ResponseModel(200, GenerateToken(user));
         }
     }
 }
