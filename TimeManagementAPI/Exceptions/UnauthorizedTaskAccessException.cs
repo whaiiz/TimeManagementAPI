@@ -6,7 +6,7 @@
         {
         }
 
-        public UnauthorizedTaskAccessException(string message) : base(message, 404)
+        public UnauthorizedTaskAccessException(string message) : base(message, 401)
         {
         }
     }
