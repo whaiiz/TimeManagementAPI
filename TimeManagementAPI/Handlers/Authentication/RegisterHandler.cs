@@ -4,7 +4,6 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Authentication;
-using TimeManagementAPI.Commands.Email;
 using TimeManagementAPI.Models;
 using TimeManagementAPI.Repositories.Interfaces;
 using TimeManagementAPI.Utils;
@@ -28,17 +27,6 @@ namespace TimeManagementAPI.Handlers.Authentication
             passwordSalt = hmac.Key;
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
-
-        private async Task<bool> SendConfirmationEmail(UserModel user)
-        {
-            //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            using var hmac = new HMACSHA512();
-            user.ConfirmationToken = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(user.));
-
-            //await _userRepository.Update(user);
-            return await _mediator.Send(new EmailSenderCommand(user.Email, 
-                "Confirmation email", "www.youtube.com"));
-        }
  
         public async Task<ResponseModel> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
@@ -59,7 +47,7 @@ namespace TimeManagementAPI.Handlers.Authentication
                 CreatedAt = DateTime.Now
             });
 
-            if (!await SendConfirmationEmail(newUser)) 
+            if (!await _mediator.Send(new SendConfirmationEmailCommand(newUser), cancellationToken))
                 return new ResponseModel(400, "Error sending confirmation email, please try to log in");
 
             return new ResponseModel(200, 
