@@ -8,6 +8,8 @@
 
         public bool IsEmailConfirmed { get; set; }
 
+        public string EmailConfirmationToken { get; set; }
+
         public byte[] PasswordHash { get; set; }
 
         // Technique used to help protect passwords stored in a database from being
