@@ -8,5 +8,6 @@ namespace TimeManagementAPI.Repositories.Interfaces
         Task<UserModel> GetByUsername(string username);
 
         Task<UserModel> GetByEmail(string email);
+        Task<UserModel> GetByEmailConfirmationToken(string token);
     }
 }

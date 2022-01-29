@@ -26,5 +26,13 @@ namespace TimeManagementAPI.Repositories.MongoDb
 
             return result;
         }
+
+        public async Task<UserModel> GetByEmailConfirmationToken(string token)
+        {
+            var filter = Builders<UserModel>.Filter.Eq("EmailConfirmationToken", token);
+            var result = await Collection.Find(filter).FirstOrDefaultAsync();
+
+            return result;
+        }
     }
 }
