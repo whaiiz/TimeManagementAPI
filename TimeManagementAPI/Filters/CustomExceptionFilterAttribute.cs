@@ -14,8 +14,8 @@ namespace TimeManagementAPI.Filters
 
             if (context.Exception is BaseException exception)
             {
-                message = exception.Message;
                 errorCode = exception.StatusCode;
+                message = exception.Message;
             }
 
             context.Result = new ObjectResult(message)

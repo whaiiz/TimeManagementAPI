@@ -1,5 +1,5 @@
 ﻿using MongoDB.Driver;
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TimeManagementAPI.Models;
 using TimeManagementAPI.Repositories.Interfaces;
@@ -12,6 +12,14 @@ namespace TimeManagementAPI.Repositories
         public TaskRepository(IMongoCollection<TaskModel> collection) : base (collection)
         {
 
+        }
+
+        public async Task<ICollection<TaskModel>> GetByUser(string username)
+        {
+            var filter = Builders<TaskModel>.Filter.Eq("username", username);
+            var result = await Collection.Find(filter).ToListAsync();
+
+            return result;
         }
     }
 }

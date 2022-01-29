@@ -22,8 +22,10 @@ namespace TimeManagementAPI.Handlers.Task
             var task = await _taskRepository.GetById(request.Task.Id);
 
             if (task == null) throw new TaskNotFoundException();
+            if (task.Username != request.Username) throw new UnauthorizedTaskAccessException();
 
             request.Task.UpdatedAt = DateTime.Now;
+            request.Task.Username = request.Username;
 
             await _taskRepository.Update(request.Task);
 

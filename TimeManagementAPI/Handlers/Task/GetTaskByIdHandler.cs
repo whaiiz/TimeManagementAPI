@@ -19,11 +19,12 @@ namespace TimeManagementAPI.Handlers.Task
 
         public async Task<TaskModel> Handle(GetTaskByIdQuery request, CancellationToken cancellationToken)
         {
-            var result = await _taskRepository.GetById(request.Id);
+            var task = await _taskRepository.GetById(request.Id);
 
-            if (result == null) throw new TaskNotFoundException();
+            if (task == null) throw new TaskNotFoundException();
+            if (task.Username != request.Username) throw new UnauthorizedTaskAccessException();
 
-            return result;
+            return task;
         }
     }
 }

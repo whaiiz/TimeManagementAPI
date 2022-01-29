@@ -2,7 +2,13 @@
 {
     public class UserModel : BaseModel
     {
-        public string Username { get; set; } = string.Empty;
+        public string Username { get; set; }
+
+        public string Email { get; set; }
+
+        public bool IsEmailConfirmed { get; set; }
+
+        public string EmailConfirmationToken { get; set; }
 
         public byte[] PasswordHash { get; set; }
 

@@ -3,5 +3,5 @@ using TimeManagementAPI.Models;
 
 namespace TimeManagementAPI.Queries.Task
 {
-    public record GetTaskByIdQuery(string Id) : IRequest<TaskModel>;
+    public record GetTaskByIdQuery(string Id, string Username) : IRequest<TaskModel>;
 }

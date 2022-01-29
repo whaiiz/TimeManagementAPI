@@ -4,12 +4,13 @@ using TimeManagementAPI.Dtos;
 using MediatR;
 using TimeManagementAPI.Commands.Authentication;
 using TimeManagementAPI.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TimeManagementAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [CustomExceptionFilterAttribute]
+    [CustomExceptionFilter]
     public class AuthenticationController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,20 +21,24 @@ namespace TimeManagementAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(UserDto request)
+        public async Task<IActionResult> Register([FromBody] UserRegisterDto request)
         {
-            await _mediator.Send(new RegisterCommand(request));
-            return Ok();
+            var response = await _mediator.Send(new RegisterCommand(request));
+            return StatusCode(response.StatusCode, response.Message);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserDto request)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto request)
         {
-            var token = await _mediator.Send(new LoginCommand(request.Username, request.Password));
+            var response = await _mediator.Send(new LoginCommand(request.Username, request.Password));
+            return StatusCode(response.StatusCode, response.Message);
+        }
 
-            if (token == "") return BadRequest("The username or password you’ve entered is incorrect.");
-
-            return Ok(token);
+        [HttpGet("confirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string token)
+        {
+            var response = await _mediator.Send(new ConfirmEmailCommand(token));
+            return StatusCode(response.StatusCode, response.Message);
         }
     }
 }

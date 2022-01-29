@@ -2,5 +2,5 @@
 
 namespace TimeManagementAPI.Commands.Task
 {
-    public record UpdateTaskStatusCommand(string Id, string Status) : IRequest;
+    public record UpdateTaskStatusCommand(string Id, string Status, string Username) : IRequest;
 }

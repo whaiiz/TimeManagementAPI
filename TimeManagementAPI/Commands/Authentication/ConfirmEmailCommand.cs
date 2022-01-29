@@ -3,6 +3,5 @@ using TimeManagementAPI.Utils;
 
 namespace TimeManagementAPI.Commands.Authentication
 {
-    public record LoginCommand(string Username, string Password) : IRequest<ResponseModel>;
-
+    public record ConfirmEmailCommand(string Token) : IRequest<ResponseModel>;
 }

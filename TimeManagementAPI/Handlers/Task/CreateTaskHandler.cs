@@ -20,6 +20,7 @@ namespace TimeManagementAPI.Handlers.Task
         public async Task<TaskModel> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
         {
             request.Task.CreatedAt = DateTime.Now;
+            request.Task.Username = request.Username;
             return await _taskRepository.Create(request.Task);
         }
     }

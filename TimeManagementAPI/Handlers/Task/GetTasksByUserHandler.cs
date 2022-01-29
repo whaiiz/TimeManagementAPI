@@ -8,18 +8,18 @@ using TimeManagementAPI.Repositories.Interfaces;
 
 namespace TimeManagementAPI.Handlers.Task
 {
-    public class GetAllTasksHandler : IRequestHandler<GetAllTasksQuery, ICollection<TaskModel>>
+    public class GetTasksByUserHandler : IRequestHandler<GetTasksByUserQuery, ICollection<TaskModel>>
     {
         private readonly ITaskRepository _taskRepository;
 
-        public GetAllTasksHandler(ITaskRepository taskRepository)
+        public GetTasksByUserHandler(ITaskRepository taskRepository)
         {
             _taskRepository = taskRepository;
         }
 
-        public async Task<ICollection<TaskModel>> Handle(GetAllTasksQuery request, CancellationToken cancellationToken)
+        public async Task<ICollection<TaskModel>> Handle(GetTasksByUserQuery request, CancellationToken cancellationToken)
         {
-            return await _taskRepository.GetAll();
+            return await _taskRepository.GetByUser(request.Username);
         }
     }
 }
