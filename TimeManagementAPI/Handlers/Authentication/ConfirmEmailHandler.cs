@@ -18,7 +18,9 @@ namespace TimeManagementAPI.Handlers.Authentication
 
         public async Task<ResponseModel> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken) 
         {
-            var user = await _userRepository.GetByUsername(request.Username);
+            var user = await _userRepository.GetByEmailConfirmationToken(request.Token);
+
+            if (user == null) return new ResponseModel(400, "Token not found!");
 
             user.IsEmailConfirmed = true;
 

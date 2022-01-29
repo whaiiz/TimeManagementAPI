@@ -24,6 +24,7 @@ namespace TimeManagementAPI.Handlers.Email
             var message = new MailMessage(from, to)
             {
                 Subject = request.Subject,
+                IsBodyHtml = true,
                 Body = request.Body
             };
             var client = new SmtpClient(_configuration.GetValue<string>("EmailServer:SmtpServer"),

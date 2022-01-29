@@ -34,11 +34,10 @@ namespace TimeManagementAPI.Controllers
             return StatusCode(response.StatusCode, response.Message);
         }
 
-        [Authorize]
-        [HttpPost("confirmEmail")]
+        [HttpGet("confirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string token)
         {
-            var response = await _mediator.Send(new ConfirmEmailCommand(User.Identity.Name, token));
+            var response = await _mediator.Send(new ConfirmEmailCommand(token));
             return StatusCode(response.StatusCode, response.Message);
         }
     }
