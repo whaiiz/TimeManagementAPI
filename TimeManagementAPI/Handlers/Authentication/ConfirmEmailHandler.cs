@@ -20,13 +20,13 @@ namespace TimeManagementAPI.Handlers.Authentication
         {
             var user = await _userRepository.GetByEmailConfirmationToken(request.Token);
 
-            if (user == null) return new ResponseModel(400, "Token not found!");
+            if (user == null) return new ResponseModel(400, Messages.InvalidEmailConfirmationToken);
 
             user.IsEmailConfirmed = true;
 
             await _userRepository.Update(user);
 
-            return new ResponseModel(200, "Email confirmed");
+            return new ResponseModel(200, Messages.EmailConfirmed);
         }
     }
 }
