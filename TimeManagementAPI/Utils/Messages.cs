@@ -7,6 +7,7 @@
         
         /* Email confirmation messages */
         public const string EmailConfirmed = "Your email was confirmed with success!";
+        public const string EmailConfirmation = "Email Confirmation"
         public const string InvalidEmailConfirmationToken = "The token sent is invalid or it has already expired!";
         
         /* Login messages */

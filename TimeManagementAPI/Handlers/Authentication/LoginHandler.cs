@@ -53,15 +53,15 @@ namespace TimeManagementAPI.Handlers.Authentication
         {
             var user = await _userRepository.GetByUsername(request.Username);
 
-            if (user == null) return new ResponseModel(400, "User doesn't exist");
-            if (!IsPasswordCorrect(user, request.Password)) return new ResponseModel(400, "Wrong Password");
+            if (user == null) return new ResponseModel(400, Messages.UserDoesntExist);
+            if (!IsPasswordCorrect(user, request.Password)) return new ResponseModel(400, Messages.WrongPassword);
             if (!user.IsEmailConfirmed) {
                 if (await _mediator.Send(new SendConfirmationEmailCommand(user), cancellationToken))
                 {
-                    return new ResponseModel(400, "Confirm your email first");
+                    return new ResponseModel(400, Messages.ConfirmYourEmail);
                 }
 
-                return new ResponseModel(400, "There was an error sending your confirmation email! Please contact support");
+                return new ResponseModel(400, Messages.ErrorSendingEmailConfirmationOnLogin);
             }
 
 

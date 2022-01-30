@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Threading.Tasks;
 using TimeManagementAPI.Exceptions;
+using TimeManagementAPI.Utils;
 
 namespace TimeManagementAPI.Filters
 {
@@ -10,7 +11,7 @@ namespace TimeManagementAPI.Filters
         public override Task OnExceptionAsync(ExceptionContext context)
         {
             var errorCode = 500;
-            var message = "Something went wrong!";
+            var message = Messages.UnexpectedError;
 
             if (context.Exception is BaseException exception)
             {

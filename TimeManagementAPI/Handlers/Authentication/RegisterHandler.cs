@@ -31,10 +31,10 @@ namespace TimeManagementAPI.Handlers.Authentication
         public async Task<ResponseModel> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             if (await _userRepository.GetByUsername(request.User.Username) != null) 
-                return new ResponseModel(400, "Username already exists");
+                return new ResponseModel(400, Messages.UsernameAlreadyExists);
 
             if (await _userRepository.GetByUsername(request.User.Email) != null)  
-                return new ResponseModel(400, "Email already exists");
+                return new ResponseModel(400, Messages.EmailAlreadyExists);
 
             CreatePasswordHash(request.User.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
@@ -48,10 +48,9 @@ namespace TimeManagementAPI.Handlers.Authentication
             });
 
             if (!await _mediator.Send(new SendConfirmationEmailCommand(newUser), cancellationToken))
-                return new ResponseModel(400, "Error sending confirmation email, please try to log in");
+                return new ResponseModel(400, Messages.ErrorSendingEmailConfirmationOnRegister);
 
-            return new ResponseModel(200, 
-                "User registered with success! Please go to your email to activate your account");
+            return new ResponseModel(200, Messages.UserRegisteredWithSuccess);
         }
     }
 }

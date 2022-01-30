@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using TimeManagementAPI.Commands.Authentication;
 using TimeManagementAPI.Commands.Email;
 using TimeManagementAPI.Repositories.Interfaces;
+using TimeManagementAPI.Utils;
 
 namespace TimeManagementAPI.Handlers.Authentication
 {
@@ -47,7 +48,7 @@ namespace TimeManagementAPI.Handlers.Authentication
             request.User.EmailConfirmationToken = GenerateConfirmationToken(request.User.Username);
             
             await _userRepository.Update(request.User);
-            return await _mediator.Send(new EmailSenderCommand(request.User.Email, "Email confirmation", message), cancellationToken);
+            return await _mediator.Send(new EmailSenderCommand(request.User.Email, Messages.EmailConfirmation, message), cancellationToken);
         }
     }
 }
