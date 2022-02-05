@@ -33,7 +33,7 @@ namespace TimeManagementAPI.Handlers.Authentication
             if (await _userRepository.GetByUsername(request.User.Username) != null) 
                 return new ResponseModel(400, Messages.UsernameAlreadyExists);
 
-            if (await _userRepository.GetByUsername(request.User.Email) != null)  
+            if (await _userRepository.GetByEmail(request.User.Email) != null)  
                 return new ResponseModel(400, Messages.EmailAlreadyExists);
 
             CreatePasswordHash(request.User.Password, out byte[] passwordHash, out byte[] passwordSalt);
