@@ -55,7 +55,8 @@ namespace TimeManagementAPI.Handlers.Authentication
 
             if (user == null) return new ResponseModel(400, Messages.UserDoesntExist);
             if (!IsPasswordCorrect(user, request.Password)) return new ResponseModel(400, Messages.WrongPassword);
-            if (!user.IsEmailConfirmed) {
+            if (!user.IsEmailConfirmed) 
+            {
                 if (await _mediator.Send(new SendConfirmationEmailCommand(user), cancellationToken))
                 {
                     return new ResponseModel(400, Messages.ConfirmYourEmail);
