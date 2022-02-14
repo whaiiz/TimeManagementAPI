@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using TimeManagementAPI.Dtos;
 using MediatR;
 using TimeManagementAPI.Commands.Authentication;
 using TimeManagementAPI.Filters;
-using Microsoft.AspNetCore.Authorization;
 using TimeManagementAPI.Models.Requests.Authentication;
 
 namespace TimeManagementAPI.Controllers
