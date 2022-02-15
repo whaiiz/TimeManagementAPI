@@ -7,7 +7,7 @@ using TimeManagementAPI.Models.Requests.Authentication;
 using TimeManagementAPI.Utils;
 using Xunit;
 
-namespace TimeManagementAPI.Tests
+namespace TimeManagementAPI.Tests.Controllers
 {
     public class RegisterTests
     {
