@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using TimeManagementAPI.Utils;
-using TimeManagementAPI.Dtos;
+using TimeManagementAPI.Models.Requests.Authentication;
 
 namespace TimeManagementAPI.Commands.Authentication
 {
-    public record RegisterCommand(UserRegisterDto User) : IRequest<ResponseModel>;
+    public record RegisterCommand(RegisterRequest Request) : IRequest<ResponseModel>;
 }

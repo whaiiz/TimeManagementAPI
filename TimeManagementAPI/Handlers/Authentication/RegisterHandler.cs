@@ -28,20 +28,20 @@ namespace TimeManagementAPI.Handlers.Authentication
             passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
         }
  
-        public async Task<ResponseModel> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
-            if (await _userRepository.GetByUsername(request.User.Username) != null) 
+            if (await _userRepository.GetByUsername(command.Request.Username) != null) 
                 return new ResponseModel(400, Messages.UsernameAlreadyExists);
 
-            if (await _userRepository.GetByEmail(request.User.Email) != null)  
+            if (await _userRepository.GetByEmail(command.Request.Email) != null)  
                 return new ResponseModel(400, Messages.EmailAlreadyExists);
 
-            CreatePasswordHash(request.User.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            CreatePasswordHash(command.Request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             var newUser = await _userRepository.Create(new UserModel()
             {
-                Email = request.User.Email,
-                Username = request.User.Username,
+                Email = command.Request.Email,
+                Username = command.Request.Username,
                 PasswordSalt = passwordSalt,
                 PasswordHash = passwordHash,
                 CreatedAt = DateTime.Now

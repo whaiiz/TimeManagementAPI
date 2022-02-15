@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TimeManagementAPI.Dtos
+namespace TimeManagementAPI.Models.Requests.Authentication
 {
-    public class UserLoginDto
+    public class LoginRequest
     {
         [Required(ErrorMessage = "The username is required")]
         public string Username { get; set; }

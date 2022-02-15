@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using TimeManagementAPI.Dtos;
 using MediatR;
 using TimeManagementAPI.Commands.Authentication;
 using TimeManagementAPI.Filters;
-using Microsoft.AspNetCore.Authorization;
+using TimeManagementAPI.Models.Requests.Authentication;
 
 namespace TimeManagementAPI.Controllers
 {
@@ -21,14 +20,14 @@ namespace TimeManagementAPI.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserRegisterDto request)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
             var response = await _mediator.Send(new RegisterCommand(request));
             return StatusCode(response.StatusCode, response.Message);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserLoginDto request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var response = await _mediator.Send(new LoginCommand(request.Username, request.Password));
             return StatusCode(response.StatusCode, response.Message);
