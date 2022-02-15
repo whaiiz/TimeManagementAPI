@@ -11,10 +11,8 @@ namespace TimeManagementAPI.Tests
 {
     public class RegisterTests
     {
-        [Fact]
-        public async Task Register_NotUniqueUsername()
+        private (Mock<IMediator>, AuthenticationController, RegisterRequest) GetBaseMocks()
         {
-            // Arrange
             var mediator = new Mock<IMediator>();
             var controller = new AuthenticationController(mediator.Object);
             var user = new RegisterRequest()
@@ -24,6 +22,16 @@ namespace TimeManagementAPI.Tests
                 Username = "Teste@gmail.com",
             };
 
+            return (mediator, controller, user);
+        }
+
+
+        [Fact]
+        public async Task Register_NotUniqueUsername()
+        {
+            // Arrange
+            var (mediator, controller, user) = GetBaseMocks();
+            
             mediator.Setup(m => m.Send(It.IsAny<RegisterCommand>(), default))
                 .ReturnsAsync(new ResponseModel(400, "Username already exists!"));
 
@@ -40,14 +48,7 @@ namespace TimeManagementAPI.Tests
         public async Task Register_NotUniqueEmail()
         {
             // Arrange
-            var mediator = new Mock<IMediator>();
-            var controller = new AuthenticationController(mediator.Object);
-            var user = new RegisterRequest()
-            {
-                Password = "Teste",
-                Email = "Teste@gmail.com",
-                Username = "Teste",
-            };
+            var (mediator, controller, user) = GetBaseMocks();
 
             mediator.Setup(m => m.Send(It.IsAny<RegisterCommand>(), default))
                 .ReturnsAsync(new ResponseModel(400, "Email already exists!"));
@@ -60,18 +61,12 @@ namespace TimeManagementAPI.Tests
             Assert.Equal("Email already exists!", response.Value);
             Assert.Equal(400, response.StatusCode);
         }
+
         [Fact]
         public async Task Register_FailSendingEmailConfirmation()
         {
             // Arrange
-            var mediator = new Mock<IMediator>();
-            var controller = new AuthenticationController(mediator.Object);
-            var user = new RegisterRequest()
-            {
-                Password = "Teste",
-                Email = "Teste@gmail.com",
-                Username = "Teste",
-            };
+            var (mediator, controller, user) = GetBaseMocks();
 
             mediator.Setup(m => m.Send(It.IsAny<RegisterCommand>(), default))
                 .ReturnsAsync(new ResponseModel(400, 
@@ -87,6 +82,24 @@ namespace TimeManagementAPI.Tests
                 "error sending email confirmation! Please try to log in.", response.Value);
             Assert.Equal(400, response.StatusCode);
         }
-    }
 
+        [Fact]
+        public async Task Register_Success()
+        {
+            // Arrange
+            var (mediator, controller, user) = GetBaseMocks();
+
+            mediator.Setup(m => m.Send(It.IsAny<RegisterCommand>(), default))
+                .ReturnsAsync(new ResponseModel(200, 
+                "User registered with success! Please go to your email to activate your account."));
+
+            // Act
+            var result = await controller.Register(user);
+
+            // Assert
+            var response = Assert.IsType<ObjectResult>(result);
+            Assert.Equal("User registered with success! Please go to your email to activate your account.", response.Value);
+            Assert.Equal(200, response.StatusCode);
+        }
+    }
 }
