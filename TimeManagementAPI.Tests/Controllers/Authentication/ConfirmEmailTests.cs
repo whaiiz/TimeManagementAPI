@@ -33,19 +33,19 @@ namespace TimeManagementAPI.Tests.Controllers.Authentication
         public async Task ConfirmEmail_Success()
         {
             // Arrange
-            var (mediator, controller, user) = GetBaseMocks();
+            var mediator = new Mock<IMediator>();
+            var controller = new AuthenticationController(mediator.Object);
 
-            mediator.Setup(m => m.Send(It.IsAny<LoginCommand>(), default))
-                .ReturnsAsync(new ResponseModel(400, "The user doesn't exist!"));
+            mediator.Setup(m => m.Send(It.IsAny<ConfirmEmailCommand>(), default))
+                .ReturnsAsync(new ResponseModel(200, "Your email was confirmed with success!"));
 
             // Act
-            var result = await controller.Login(user);
+            var result = await controller.ConfirmEmail("token");
 
             // Assert
             var response = Assert.IsType<ObjectResult>(result);
-            Assert.Equal("The user doesn't exist!", response.Value);
-            Assert.Equal(400, response.StatusCode);
+            Assert.Equal("Your email was confirmed with success!", response.Value);
+            Assert.Equal(200, response.StatusCode);
         }
-
     }
 }
