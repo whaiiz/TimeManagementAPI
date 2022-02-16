@@ -53,7 +53,7 @@ namespace TimeManagementAPI.Handlers.Authentication
         {
             var user = await _userRepository.GetByUsername(request.Username);
 
-            if (user == null) return new ResponseModel(400, Messages.UserDoesntExist);
+            if (user == null) return new ResponseModel(400, Messages.UserDoesNotExist);
             if (!IsPasswordCorrect(user, request.Password)) return new ResponseModel(400, Messages.WrongPassword);
             if (!user.IsEmailConfirmed) 
             {
