@@ -24,4 +24,8 @@
     <ProjectReference Include="..\TimeManagementAPI\TimeManagementAPI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\Task\" />
+  </ItemGroup>
+
 </Project>
