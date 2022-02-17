@@ -11,7 +11,7 @@ namespace TimeManagementAPI.Tests.Controllers
 {
     public class RegisterTests
     {
-        private (Mock<IMediator>, AuthenticationController, RegisterRequest) GetBaseMocks()
+        private static (Mock<IMediator>, AuthenticationController, RegisterRequest) GetBaseMocks()
         {
             var mediator = new Mock<IMediator>();
             var controller = new AuthenticationController(mediator.Object);
@@ -24,7 +24,6 @@ namespace TimeManagementAPI.Tests.Controllers
 
             return (mediator, controller, user);
         }
-
 
         [Fact]
         public async Task Register_NotUniqueUsername()

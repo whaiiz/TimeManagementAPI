@@ -11,7 +11,7 @@
         public const string InvalidEmailConfirmationToken = "The token sent is invalid or it has already expired!";
         
         /* Login messages */
-        public const string UserDoesntExist = "The user doesn't exist!";
+        public const string UserDoesNotExist = "The user doesn't exist!";
         public const string WrongPassword = "Wrong password!";
         public const string ConfirmYourEmail = "Confirm your email first!";
         public const string ErrorSendingEmailConfirmationOnLogin = "Error sending email confirmation! Please contact support.";
