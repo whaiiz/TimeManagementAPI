@@ -5,7 +5,8 @@
         /* Generic messages */
         public const string UnexpectedError = "Something went wrong!";
         public const string ErrorSendingEmailConfirmation = "Error sending email confirmation! Please contact support.";
-
+        public const string PasswordReset = "Password reset done";
+        
         /* Email confirmation messages */
         public const string EmailConfirmed = "Your email was confirmed with success!";
         public const string EmailConfirmation = "Email Confirmation";
