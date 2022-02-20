@@ -41,7 +41,7 @@ namespace TimeManagementAPI.Controllers
             return StatusCode(response.StatusCode, response.Message);
         }
 
-        [HttpGet("forgotPassword")]
+        [HttpPost("forgotPassword")]
         public async Task<IActionResult> ForgotPassword(string email)
         {
             var response = await _mediator.Send(new ForgotPasswordCommand(email));
