@@ -50,13 +50,10 @@ namespace TimeManagementAPI.Handlers.Authentication
             if (user == null) return new ResponseModel(404, Messages.UserDoesNotExist);
 
             var token = GenerateTokenToResetPassword(user);
-            var forgotPasswordUrl = $"{_configuration.GetSection("BaseUrl").Value}/api/Authentication/ResetPassword" +
-                $"?token={token}";
-            var message = File.ReadAllText("Utils/EmailViews/ResetPassword.html");
-            message = message.Replace("[forgotPasswordUrl]", forgotPasswordUrl);
-
-            var success = await _mediator.Send(
-                new EmailSenderCommand(user.Email, "Reset your password", message), cancellationToken);
+            var forgotPasswordUrl = $"{_configuration.GetSection("FrontUrl").Value}/ResetPassword?token={token}";
+            var message = File.ReadAllText("Utils/EmailViews/ResetPassword.html")
+                .Replace("[forgotPasswordUrl]", forgotPasswordUrl);
+            var success = await _mediator.Send(new EmailSenderCommand(user.Email, "Reset your password", message), cancellationToken);
 
             return success ? new ResponseModel(200, Messages.EmailSentToResetPassword) : 
                 new ResponseModel(400, Messages.ErrorSendingEmailConfirmation);

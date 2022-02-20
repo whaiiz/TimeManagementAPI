@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,7 +45,9 @@ namespace TimeManagementAPI.Handlers.Authentication
         {
             var confirmationToken = GenerateConfirmationToken(request.User.Username);
             var emailConfirmationUrl = $"{_configuration.GetSection("BaseUrl").Value}/api/Authentication/ConfirmEmail?token={confirmationToken}";
-            var message = $"Confirm your email <a href=\"{emailConfirmationUrl}\">here</a>";
+            var message = File.ReadAllText("Utils/EmailViews/ConfirmEmail.html");
+            message = message.Replace("[emailConfirmationUrl]", emailConfirmationUrl);
+
             request.User.EmailConfirmationToken = GenerateConfirmationToken(request.User.Username);
             
             await _userRepository.Update(request.User);
