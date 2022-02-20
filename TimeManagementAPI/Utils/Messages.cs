@@ -4,17 +4,20 @@
     {
         /* Generic messages */
         public const string UnexpectedError = "Something went wrong!";
+        public const string ErrorSendingEmailConfirmation = "Error sending email confirmation! Please contact support.";
+        public const string PasswordReset = "Password reset done";
         
         /* Email confirmation messages */
         public const string EmailConfirmed = "Your email was confirmed with success!";
         public const string EmailConfirmation = "Email Confirmation";
         public const string InvalidEmailConfirmationToken = "The token sent is invalid or it has already expired!";
-        
+
         /* Login messages */
         public const string UserDoesNotExist = "The user doesn't exist!";
         public const string WrongPassword = "Wrong password!";
         public const string ConfirmYourEmail = "Confirm your email first!";
         public const string ErrorSendingEmailConfirmationOnLogin = "Error sending email confirmation! Please contact support.";
+        public const string EmailSentToResetPassword = "It was sent an email to reset your password";
 
         /* Register messages */
         public const string UsernameAlreadyExists = "Username already exists!";

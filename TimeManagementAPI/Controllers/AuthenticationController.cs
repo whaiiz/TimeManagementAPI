@@ -4,6 +4,7 @@ using MediatR;
 using TimeManagementAPI.Commands.Authentication;
 using TimeManagementAPI.Filters;
 using TimeManagementAPI.Models.Requests.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TimeManagementAPI.Controllers
 {
@@ -37,6 +38,21 @@ namespace TimeManagementAPI.Controllers
         public async Task<IActionResult> ConfirmEmail(string token)
         {
             var response = await _mediator.Send(new ConfirmEmailCommand(token));
+            return StatusCode(response.StatusCode, response.Message);
+        }
+
+        [HttpGet("forgotPassword")]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            var response = await _mediator.Send(new ForgotPasswordCommand(email));
+            return StatusCode(response.StatusCode, response.Message);
+        }
+
+        [HttpPost("resetPassword")]
+        [Authorize]
+        public async Task<IActionResult> ResetPassword([FromBody] string password)
+        {
+            var response = await _mediator.Send(new ResetPasswordCommand(User, password));
             return StatusCode(response.StatusCode, response.Message);
         }
     }
