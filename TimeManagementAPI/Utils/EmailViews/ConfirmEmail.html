@@ -1,0 +1,57 @@
+﻿<html>  
+    <head>
+        <style>
+            * {
+                font-family: Roboto;
+            }
+
+            body {
+                background-color: #547CC8;
+            }
+
+            .reset-password-container {
+                display: inline-block;
+                background-color: white;
+                border-radius: 20px;
+                padding: 25px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-right: -50%;
+                transform: translate(-50%, -50%);
+            }
+
+            main > h1 {
+                margin: 2em;
+            }
+
+            .reset-password-btn {
+                margin-top: 18px;
+                background-color: #547CC8;
+                border: none;
+                border-radius: 12px;
+                color: white;
+                padding: 10px;
+                font-size: 18px;
+                text-align: center;
+                text-decoration: none;
+            }
+
+            .reset-password-text {
+                font-size: 25px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="reset-password-container">
+            <h1>Confirm your email</h1>
+            <p class="reset-password-text">
+                Thanks for registrating in our application.
+                You recently requested a password reset for your Ganda Time account. <br />
+                You can use the button below to confirm your email<br />
+                The button link will expire in 24 hours. <br />
+            </p>
+            <a class="reset-password-btn" href="[emailConfirmationUrl]">Confirm email</a>
+        </div>
+    </body>
+</html>
