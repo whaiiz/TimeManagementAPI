@@ -1,9 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,7 +37,7 @@ namespace TimeManagementAPI.Handlers.Authentication
             var claims = new List<Claim> { new Claim(ClaimTypes.Name, user.Username) };
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("JwtTokenKey").Value));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-            var token = new JwtSecurityToken(claims: claims, expires: DateTime.Now.AddDays(1), signingCredentials: creds);
+            var token = new JwtSecurityToken(claims: claims, expires: DateTime.Now.AddHours(2), signingCredentials: creds);
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
@@ -44,12 +46,14 @@ namespace TimeManagementAPI.Handlers.Authentication
         public async Task<ResponseModel> Handle(ForgotPasswordCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByEmail(request.Email);
-            var token = GenerateTokenToResetPassword(user);
-            var emailConfirmationUrl = $"{_configuration.GetSection("BaseUrl").Value}/api/Authentication/ConfirmEmail" +
-                $"?token={token}";
-            var message = $"Confirm your email <a href=\"{emailConfirmationUrl}\">here</a>";
 
             if (user == null) return new ResponseModel(404, Messages.UserDoesNotExist);
+
+            var token = GenerateTokenToResetPassword(user);
+            var forgotPasswordUrl = $"{_configuration.GetSection("BaseUrl").Value}/api/Authentication/ResetPassword" +
+                $"?token={token}";
+            var message = File.ReadAllText("Utils/EmailViews/ResetPassword.html");
+            message = message.Replace("[forgotPasswordUrl]", forgotPasswordUrl);
 
             var success = await _mediator.Send(
                 new EmailSenderCommand(user.Email, "Reset your password", message), cancellationToken);
