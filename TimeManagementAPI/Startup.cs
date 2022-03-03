@@ -1,3 +1,4 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -28,7 +29,13 @@ namespace TimeManagementAPI
         {
             var mongoClient = new MongoClient(Configuration.GetValue<string>("TimeManagementDb:ConnectionString"));
             var database = mongoClient.GetDatabase(Configuration.GetValue<string>("TimeManagementDb:DatabaseName"));
-
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new AutoMapperProfile());
+            });
+            var mapper = mapperConfig.CreateMapper();
+            
+            services.AddSingleton(mapper);
             services.AddScoped(p => database.GetCollection<TaskModel>("Tasks"));
             services.AddScoped(p => database.GetCollection<UserModel>("Users"));
             services.AddScoped<IUserRepository, UserRepository>();
@@ -55,6 +62,7 @@ namespace TimeManagementAPI
                     ValidateAudience = false
                 };
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

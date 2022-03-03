@@ -28,6 +28,8 @@ namespace TimeManagementAPI.Handlers.Authentication
         public async Task<ResponseModel> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByUsername(request.User.Identity.Name);
+           
+            if (user == null) return new ResponseModel(401, Messages.UserDoesNotExist);
 
             CreatePasswordHash(request.NewPassword, out byte[] passwordHash, out byte[] passwordSalt);
             user.PasswordSalt = passwordSalt;
