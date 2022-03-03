@@ -4,6 +4,7 @@ using MediatR;
 using TimeManagementAPI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using TimeManagementAPI.Commands.User;
+using TimeManagementAPI.Queries.User;
 
 namespace TimeManagementAPI.Controllers
 {
@@ -32,6 +33,12 @@ namespace TimeManagementAPI.Controllers
         {
             await _mediator.Send(new UpdateUserDefaultFocusTimeCommand(User.Identity.Name, breakTime));
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetByUsername()
+        {
+            return Ok(await _mediator.Send(new GetUserByUsernameQuery(User.Identity.Name)));
         }
     }
 }
