@@ -15,5 +15,9 @@
         // Technique used to help protect passwords stored in a database from being
         // reverse-engineered by hackers who might breach the environment.
         public byte[] PasswordSalt { get; set; }
+
+        public int DefaultFocusTime { get; set; }
+
+        public int DefaultBreakTime { get; set; }
     }
 }
