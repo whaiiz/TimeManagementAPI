@@ -21,21 +21,21 @@ namespace TimeManagementAPI.Controllers
             _mediator = mediator;
         }
 
-        [HttpPut]
+        [HttpPut("UpdateUserDefaultFocusTime")]
         public async Task<IActionResult> UpdateUserDefaultFocusTime(int focusTime)
         {
             await _mediator.Send(new UpdateUserDefaultFocusTimeCommand(User.Identity.Name, focusTime));
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("UpdateUserDefaultBreakTime")]
         public async Task<IActionResult> UpdateUserDefaultBreakTime(int breakTime)
         {
             await _mediator.Send(new UpdateUserDefaultFocusTimeCommand(User.Identity.Name, breakTime));
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("GetByUsername")]
         public async Task<IActionResult> GetByUsername()
         {
             return Ok(await _mediator.Send(new GetUserByUsernameQuery(User.Identity.Name)));
