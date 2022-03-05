@@ -35,8 +35,8 @@ namespace TimeManagementAPI.Controllers
             return Ok();
         }
 
-        [HttpGet("GetByUsername")]
-        public async Task<IActionResult> GetByUsername()
+        [HttpGet("GetUser")]
+        public async Task<IActionResult> GetUser()
         {
             return Ok(await _mediator.Send(new GetUserByUsernameQuery(User.Identity.Name)));
         }
