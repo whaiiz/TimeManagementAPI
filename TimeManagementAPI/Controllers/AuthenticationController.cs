@@ -5,6 +5,7 @@ using TimeManagementAPI.Commands.Authentication;
 using TimeManagementAPI.Filters;
 using TimeManagementAPI.Models.Requests.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace TimeManagementAPI.Controllers
 {
@@ -31,6 +32,13 @@ namespace TimeManagementAPI.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var response = await _mediator.Send(new LoginCommand(request.Username, request.Password));
+            
+            if (response.StatusCode == 200)
+            {
+                HttpContext.Response.Cookies.Append("access_token", response.Message, 
+                    new CookieOptions { HttpOnly = true });
+            }
+
             return StatusCode(response.StatusCode, response.Message);
         }
 
