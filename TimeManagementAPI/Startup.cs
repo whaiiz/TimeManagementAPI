@@ -17,6 +17,8 @@ namespace TimeManagementAPI
 {
     public class Startup
     {
+        private const string AllOWED_ORIGIN = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -34,7 +36,7 @@ namespace TimeManagementAPI
                 mc.AddProfile(new AutoMapperProfile());
             });
             var mapper = mapperConfig.CreateMapper();
-            
+
             services.AddSingleton(mapper);
             services.AddScoped(p => database.GetCollection<TaskModel>("Tasks"));
             services.AddScoped(p => database.GetCollection<UserModel>("Users"));
@@ -62,7 +64,16 @@ namespace TimeManagementAPI
                     ValidateAudience = false
                 };
             });
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllOWED_ORIGIN,
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:3000")
+                            .AllowCredentials()
+                            .AllowAnyHeader();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,8 +87,9 @@ namespace TimeManagementAPI
             }
 
             app.UseHttpsRedirection();
+            app.UseCookiePolicy();
             app.UseRouting();
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(AllOWED_ORIGIN);
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
