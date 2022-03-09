@@ -10,7 +10,7 @@ namespace TimeManagementAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [CustomExceptionFilter]
     public class UserController : ControllerBase
     {
