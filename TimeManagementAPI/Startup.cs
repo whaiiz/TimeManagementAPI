@@ -86,9 +86,10 @@ namespace TimeManagementAPI
                 options.AddPolicy(name: AllOWED_ORIGIN,
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:3001")
+                        builder.WithOrigins("https://localhost:3000")
                             .AllowCredentials()
-                            .AllowAnyHeader();
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
         }
