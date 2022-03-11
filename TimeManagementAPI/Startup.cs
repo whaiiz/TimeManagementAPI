@@ -63,7 +63,7 @@ namespace TimeManagementAPI
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                        Configuration.GetSection("JwtTokenKey").Value)),
+                        Configuration.GetSection("Jwt:TokenKey").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };

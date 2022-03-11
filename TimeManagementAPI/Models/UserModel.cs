@@ -1,4 +1,6 @@
-﻿namespace TimeManagementAPI.Models
+﻿using System;
+
+namespace TimeManagementAPI.Models
 {
     public class UserModel : BaseModel
     {
@@ -19,5 +21,9 @@
         public int DefaultFocusTime { get; set; }
 
         public int DefaultBreakTime { get; set; }
+
+        public string RefreshToken { get; set; }
+
+        public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }

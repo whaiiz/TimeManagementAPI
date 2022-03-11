@@ -33,7 +33,7 @@ namespace TimeManagementAPI.Handlers.Authentication
         {
             var claims = new List<Claim> { new Claim(ClaimTypes.Name, username) };
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                _configuration.GetSection("JwtTokenKey").Value));
+                _configuration.GetSection("Jwt:TokenKey").Value));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var token = new JwtSecurityToken(claims: claims, expires: DateTime.Now.AddMinutes(15), signingCredentials: creds);
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
