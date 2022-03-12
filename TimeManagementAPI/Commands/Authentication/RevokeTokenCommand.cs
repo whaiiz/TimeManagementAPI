@@ -2,5 +2,5 @@
 
 namespace TimeManagementAPI.Commands.Authentication
 {
-    //public record RevokeTokenCommand : IRequest<>
+    public record RevokeTokenCommand(string RefreshToken) : IRequest;
 }
