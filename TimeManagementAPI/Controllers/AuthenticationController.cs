@@ -6,6 +6,7 @@ using TimeManagementAPI.Filters;
 using TimeManagementAPI.Models.Requests.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace TimeManagementAPI.Controllers
 {
@@ -71,15 +72,17 @@ namespace TimeManagementAPI.Controllers
         {
             var accessToken = Request.Cookies["access_token"];
             var refreshToken = Request.Cookies["refresh_token"];
-            await _mediator.Send(new RefreshTokenCommand(accessToken, refreshToken));
-
-            return Ok();
+            var response = await _mediator.Send(new RefreshTokenCommand(accessToken, refreshToken));
+            
+            return Ok(JsonSerializer.Serialize(response));
         }
 
-        [HttpPost("refreshToken")]
+        [HttpPost("revokeToken")]
         public async Task<IActionResult> RevokeToken()
         {
-
+            var refreshToken = Request.Cookies["refresh_token"];
+            await _mediator.Send(new RevokeTokenCommand(refreshToken));
+            return Ok();
         }
     }
 }
