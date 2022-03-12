@@ -34,5 +34,13 @@ namespace TimeManagementAPI.Repositories.MongoDb
 
             return result;
         }
+
+        public async Task<UserModel> GetByRefreshToken(string refreshToken)
+        {
+            var filter = Builders<UserModel>.Filter.Eq("RefreshToken", refreshToken);
+            var result = await Collection.Find(filter).FirstOrDefaultAsync();
+
+            return result;
+        }
     }
 }
