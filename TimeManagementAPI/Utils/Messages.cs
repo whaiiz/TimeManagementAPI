@@ -25,5 +25,10 @@
         public const string ErrorSendingEmailConfirmationOnRegister = "User registered with success! but there was an " +
             "error sending email confirmation! Please try to log in.";
         public const string UserRegisteredWithSuccess = "User registered with success! Please go to your email to activate your account.";
+    
+        /* Token messages */
+        public const string InvalidToken = "Invalid token!";
+        public const string RefreshTokenExpired = "Refresh token expired.";
+
     }
 }
