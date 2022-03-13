@@ -3,5 +3,5 @@ using TimeManagementAPI.Models.Responses;
 
 namespace TimeManagementAPI.Commands.Authentication
 {
-    public record LoginCommand(string Username, string Password) : IRequest<LoginResponse>;
+    public record RefreshTokenCommand(string AccessToken, string RefreshToken) : IRequest<RefreshTokenResponse>;
 }

@@ -6,6 +6,7 @@ using TimeManagementAPI.Filters;
 using TimeManagementAPI.Models.Requests.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
 namespace TimeManagementAPI.Controllers
 {
@@ -35,7 +36,9 @@ namespace TimeManagementAPI.Controllers
             
             if (response.StatusCode == 200)
             {
-                HttpContext.Response.Cookies.Append("access_token", response.Message, 
+                HttpContext.Response.Cookies.Append("access_token", response.AccessToken, 
+                    new CookieOptions { HttpOnly = true });
+                HttpContext.Response.Cookies.Append("refresh_token", response.RefreshToken,
                     new CookieOptions { HttpOnly = true });
             }
 
@@ -62,6 +65,34 @@ namespace TimeManagementAPI.Controllers
         {
             var response = await _mediator.Send(new ResetPasswordCommand(User, password));
             return StatusCode(response.StatusCode, response.Message);
+        }
+
+        [HttpPost("refreshToken")]
+        public async Task<IActionResult> RefreshToken()
+        {
+            var accessToken = Request.Cookies["access_token"];
+            var refreshToken = Request.Cookies["refresh_token"];
+            var response = await _mediator.Send(new RefreshTokenCommand(accessToken, refreshToken));
+
+            if (response.StatusCode != 200)
+            {
+                return StatusCode(response.StatusCode, JsonSerializer.Serialize(response));
+            }
+
+            HttpContext.Response.Cookies.Append("access_token", response.AccessToken,
+                new CookieOptions { HttpOnly = true });
+            HttpContext.Response.Cookies.Append("refresh_token", response.RefreshToken,
+                new CookieOptions { HttpOnly = true });
+
+            return Ok();
+        }
+
+        [HttpPost("revokeToken")]
+        public async Task<IActionResult> RevokeToken()
+        {
+            var refreshToken = Request.Cookies["refresh_token"];
+            await _mediator.Send(new RevokeTokenCommand(refreshToken));
+            return Ok();
         }
     }
 }

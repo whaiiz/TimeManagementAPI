@@ -5,12 +5,13 @@ using TimeManagementAPI.Filters;
 using Microsoft.AspNetCore.Authorization;
 using TimeManagementAPI.Commands.User;
 using TimeManagementAPI.Queries.User;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TimeManagementAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [CustomExceptionFilter]
     public class UserController : ControllerBase
     {

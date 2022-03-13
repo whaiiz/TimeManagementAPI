@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
+using System.Threading.Tasks;
 using TimeManagementAPI.Models;
 using TimeManagementAPI.Repositories;
 using TimeManagementAPI.Repositories.Interfaces;
@@ -49,9 +50,12 @@ namespace TimeManagementAPI
             services.AddMediatR(typeof(Startup).Assembly);
             services.AddAuthentication(x =>
             {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x =>
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
@@ -59,11 +63,24 @@ namespace TimeManagementAPI
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
-                        Configuration.GetSection("JwtTokenKey").Value)),
+                        Configuration.GetSection("Jwt:TokenKey").Value)),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-            });
+                x.SaveToken = true;
+                x.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        if (context.Request.Cookies.ContainsKey("access_token"))
+                        {
+                            context.Token = context.Request.Cookies["access_token"];
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
+            }).AddCookie();
             services.AddCors(options =>
             {
                 options.AddPolicy(name: AllOWED_ORIGIN,
@@ -71,7 +88,8 @@ namespace TimeManagementAPI
                     {
                         builder.WithOrigins("https://localhost:3000")
                             .AllowCredentials()
-                            .AllowAnyHeader();
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
         }
