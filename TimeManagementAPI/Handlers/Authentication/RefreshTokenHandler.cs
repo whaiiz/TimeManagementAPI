@@ -61,7 +61,7 @@ namespace TimeManagementAPI.Handlers.Authentication
             {
                 RefreshTokenExpired = true,
                 Message = Messages.RefreshTokenExpired,
-                StatusCode = 400
+                StatusCode = 401
             };
 
             return new RefreshTokenResponse()

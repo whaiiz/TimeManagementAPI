@@ -73,8 +73,18 @@ namespace TimeManagementAPI.Controllers
             var accessToken = Request.Cookies["access_token"];
             var refreshToken = Request.Cookies["refresh_token"];
             var response = await _mediator.Send(new RefreshTokenCommand(accessToken, refreshToken));
-            
-            return Ok(JsonSerializer.Serialize(response));
+
+            if (response.StatusCode != 200)
+            {
+                return StatusCode(response.StatusCode, JsonSerializer.Serialize(response));
+            }
+
+            HttpContext.Response.Cookies.Append("access_token", response.AccessToken,
+                new CookieOptions { HttpOnly = true });
+            HttpContext.Response.Cookies.Append("refresh_token", response.RefreshToken,
+                new CookieOptions { HttpOnly = true });
+
+            return Ok();
         }
 
         [HttpPost("revokeToken")]

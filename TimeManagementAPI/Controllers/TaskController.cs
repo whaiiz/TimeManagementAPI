@@ -29,7 +29,7 @@ namespace TimeManagementAPI.Controllers
             Ok(await _mediator.Send(new CreateTaskCommand(task, User.Identity.Name)));
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() => 
+        public async Task<IActionResult> GetByUser() => 
             Ok(await _mediator.Send(new GetTasksByUserQuery(User.Identity.Name)));
 
         [HttpGet("{id}")]
