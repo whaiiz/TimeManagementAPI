@@ -87,11 +87,23 @@ namespace TimeManagementAPI.Controllers
             return Ok();
         }
 
-        [HttpPost("revokeToken")]
-        public async Task<IActionResult> RevokeToken()
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
         {
             var refreshToken = Request.Cookies["refresh_token"];
-            await _mediator.Send(new RevokeTokenCommand(refreshToken));
+            var accessToken = Request.Cookies["access_token"];
+
+            if (accessToken is not null)
+            {
+                HttpContext.Response.Cookies.Append("access_token", "", new CookieOptions { HttpOnly = true });
+            }
+
+            if (refreshToken is not null)
+            {
+                await _mediator.Send(new RevokeTokenCommand(refreshToken));
+                HttpContext.Response.Cookies.Append("refresh_token", "", new CookieOptions { HttpOnly = true });
+            }
+
             return Ok();
         }
     }
