@@ -32,7 +32,7 @@ namespace TimeManagementAPI.Controllers
         [HttpPut("UpdateUserDefaultBreakTime")]
         public async Task<IActionResult> UpdateUserDefaultBreakTime(int breakTime)
         {
-            await _mediator.Send(new UpdateUserDefaultFocusTimeCommand(User.Identity.Name, breakTime));
+            await _mediator.Send(new UpdateUserDefaultBreakTimeCommand(User.Identity.Name, breakTime));
             return Ok();
         }
 
