@@ -8,6 +8,8 @@
 
 # appsettings.json
 TimeManagementAPI/appsettings.json
+TimeManagementAPI/appsettings.Development.json
+TimeManagementAPI/appsettings.Production.json
 
 # User-specific files
 *.suo
